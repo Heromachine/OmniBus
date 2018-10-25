@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary_light">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cv_set"
+        android:layout_width="27dp"
+        android:layout_height="29dp">
+
+        <ImageView
+            android:id="@+id/iv_seat"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFF"
+            app:srcCompat="@drawable/icon_seat" />
+
+        <TextView
+            android:id="@+id/tv_seat"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="15dp"
+            android:gravity="center"
+            android:hint="S0"
+            android:text=""
+            android:textColor="#212121"
+            android:textColorHint="#212121"
+            android:textSize="10dp"
+            android:textStyle="bold" />
+    </android.support.v7.widget.CardView>
+</android.support.constraint.ConstraintLayout>

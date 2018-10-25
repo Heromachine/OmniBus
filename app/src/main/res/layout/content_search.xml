@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".ui.search.SearchActivity"
+    tools:showIn="@layout/app_bar_search">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/colorPrimary_light">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="133dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/colorPrimaryDark">
+
+            <TextView
+                android:layout_width="252dp"
+                android:layout_height="match_parent"
+                android:text="Search"
+                android:textColor="@color/colorIcons"
+                android:textSize="75dp" />
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="139dp"
+                android:layout_height="135dp"
+                android:layout_gravity="right"
+                app:srcCompat="@drawable/search_icon" />
+
+        </LinearLayout>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp">
+
+            <EditText
+                android:id="@+id/et_city_departure"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Departing City"
+                android:inputType="textPersonName"
+                android:padding="10dp"/>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="15dp">
+
+            <EditText
+                android:id="@+id/et_city_arrival"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Arriving City"
+                android:inputType="textPersonName"
+                android:padding="10dp"/>
+        </android.support.v7.widget.CardView>
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#212121"
+                android:textColor="#FFF"
+                android:text="Date: "
+                android:textSize="30dp"
+                android:padding="10dp"
+                />
+
+            <TextView
+                android:layout_width="317dp"
+                android:layout_height="wrap_content"
+                android:hint="Select Date"
+                android:padding="10dp"
+                android:textSize="30dp"
+                android:textColorHint="#BDBDBD"
+                android:background="#212121"
+                android:textColor="#FFF"/>
+
+
+        </LinearLayout>
+
+
+        <com.github.sundeepk.compactcalendarview.CompactCalendarView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/compactcalendar_view"
+            android:layout_width="fill_parent"
+            android:layout_height="221dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            app:compactCalendarBackgroundColor="#757575"
+            app:compactCalendarCurrentDayBackgroundColor="#FFEB3B"
+            app:compactCalendarCurrentSelectedDayBackgroundColor="#BDBDBD"
+            app:compactCalendarMultiEventIndicatorColor="#fff"
+            app:compactCalendarTargetHeight="250dp"
+            app:compactCalendarTextColor="#fff"
+            app:compactCalendarTextSize="12sp" />
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            app:cardCornerRadius="5dp">
+
+            <Button
+                android:id="@+id/btn_search"
+                android:layout_width="170dp"
+                android:layout_height="45dp"
+                android:background="#0288D1"
+                android:padding="5dp"
+                android:text="Search"
+                android:textColor="#FFF"
+                android:textSize="17dp" />
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

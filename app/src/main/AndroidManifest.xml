@@ -17,16 +17,20 @@
         <activity
             android:name=".ui.search.SearchActivity"
             android:label="@string/title_activity_search"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".ui.busselection.BusActivity" />
+        <activity android:name=".ui.seat.SeatsActivity" />
+        <activity android:name=".ui.passenger.PassengerActivity" />
+        <activity android:name=".ui.chekcout.CheckOutActivity" />
+        <activity android:name=".ui.payment.PaymentActivity" />
+        <activity android:name=".ui.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.busselection.BusActivity" />
-        <activity android:name=".ui.seatselection.SeatActivity" />
-        <activity android:name=".ui.passenger.PassengerActivity"></activity>
+        <activity android:name=".ui.route.RouteActivity"></activity>
     </application>
 
 </manifest>

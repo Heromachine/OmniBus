@@ -4,11 +4,96 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.passenger.PassengerActivity">
+    tools:context=".ui.passenger.PassengerActivity"
+    tools:layout_editor_absoluteY="81dp">
 
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="395dp"
-        android:layout_height="587dp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp" />
+
+    <LinearLayout
+        android:layout_width="411dp"
+        android:layout_height="602dp"
+        android:background="@color/colorPrimary_light"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_contact_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Contact Info"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
+
+        <android.support.v7.widget.CardView
+            android:layout_width="390dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="15dp"
+            app:cardCornerRadius="5dp"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="77dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="vertical">
+
+
+                <EditText
+                    android:id="@+id/et_contact_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress" />
+
+                <EditText
+                    android:id="@+id/et_mobile_passenger"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Mobile"
+                    android:inputType="phone" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <TextView
+            android:id="@+id/tv_passenger_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:text="Passengers"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView2"
+            android:layout_width="match_parent"
+            android:layout_height="296dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/colorPrimary_light"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="145dp">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:cardCornerRadius="10dp"
+            android:layout_marginTop="15dp">
+
+            <Button
+                android:id="@+id/btn_add_passengers"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:background="@color/colorPrimaryDark"
+                android:padding="10dp"
+                android:text="Confirm Passenger(s)"
+                android:textColor="@color/colorIcons" />
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

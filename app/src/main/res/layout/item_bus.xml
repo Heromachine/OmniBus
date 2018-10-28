@@ -8,107 +8,45 @@
     <android.support.v7.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
-        android:layout_height="293dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         app:cardCornerRadius="5dp"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="10dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
 
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+
+>
 
             <LinearLayout
-                android:layout_width="256dp"
-                android:layout_height="match_parent"
+                android:layout_width="418dp"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 tools:layout_editor_absoluteY="10dp">
 
                 <TextView
                     android:id="@+id/tv_bussub"
-                    android:layout_width="299dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#0288D1"
                     android:padding="5dp"
                     android:text="Bus Information"
-                    android:textColor="#FFF" />
-
-                <TextView
-                    android:id="@+id/tv_bus_id"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="5dp"
-
-                    android:text="Bus ID: " />
-
-                <TextView
-                    android:id="@+id/tv_bus_reg_no"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:text="Bus Registration No." />
-
-                <TextView
-                    android:id="@+id/tv_bus_type"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:text="Bus Type:" />
-
-                <TextView
-                    android:id="@+id/tv_timesub"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#0288D1"
-                    android:padding="5dp"
-                    android:text="Time Information"
-                    android:textColor="#FFF" />
-
-                <TextView
-                    android:id="@+id/tv_duration"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:text="Duration: " />
-
-
-                <TextView
-                    android:id="@+id/tv_boarding_time"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:text="Boarding Time: " />
-
-                <TextView
-                    android:id="@+id/tv_dropping_time"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:text="Dropping Time:" />
-
-                <TextView
-                    android:id="@+id/tv_depart_time"
-                    android:layout_width="match_parent"
-                    android:layout_height="67dp"
-                    android:padding="5dp"
-                    android:text="Departure Time:"
+                    android:textColor="#FFF"
                     android:textStyle="bold"
-                    android:textSize="15dp"
+                    android:textSize="20dp"/>
 
-                    />
+                <TextView
+                    android:id="@+id/tv_bus_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="" />
+
+
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_fare"
-                android:layout_width="154dp"
-                android:layout_height="45dp"
-                android:padding="5dp"
-                android:text="Fare: "
-                android:textColor="#0288D1"
-                android:textSize="20dp"
-                tools:layout_editor_absoluteX="256dp"
-                tools:layout_editor_absoluteY="243dp" />
 
-
-        </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 </android.support.constraint.ConstraintLayout>

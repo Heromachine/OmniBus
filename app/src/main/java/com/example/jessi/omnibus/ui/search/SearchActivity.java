@@ -12,11 +12,28 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.jessi.omnibus.R;
+import com.example.jessi.omnibus.data.models.CityNamesModel;
+import com.example.jessi.omnibus.data.models.CitiesModel;
+
+import java.util.List;
 
 public class SearchActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, SearchContract.View {
+
+    SearchContract.Presenter presenter;
+    CitiesModel citiesModel;
+    List<String> cityNameList;
+
+    EditText etCityDeparture;
+    EditText etCityArrival;
+
+    Button btnSearch;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +59,26 @@ public class SearchActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //TODO ADD FUNCTIONS
+        presenter = new SearchPresenter(this);
+
+        etCityDeparture = findViewById(R.id.et_city_departure);
+        etCityArrival = findViewById(R.id.et_city_arrival);
+
+        btnSearch = findViewById(R.id.btn_search);
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (etCityArrival.getText().toString() != "" && etCityDeparture.getText().toString() != "") {
+                    presenter.onButtonClicked(view);
+                } else {
+                    Toast.makeText(SearchActivity.this, "Please Enter Both City Names", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
     }
 
     @Override
@@ -100,4 +137,22 @@ public class SearchActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    @Override
+    public void setCitiesModel(CitiesModel citiesModel) {
+        this.citiesModel = citiesModel;
+    }
+
+    @Override
+    public CitiesModel getCitiesModel() {
+        return this.citiesModel;
+    }
+
+    @Override
+    public CityNamesModel getCityNames() {
+        CityNamesModel cityNamesModel = new CityNamesModel(etCityDeparture.getText().toString(), etCityArrival.getText().toString());
+        return cityNamesModel;
+    }
+
+
 }

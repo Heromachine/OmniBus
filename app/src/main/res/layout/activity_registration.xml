@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.registration.RegistrationActivity"
+    tools:context=".ui.registrationModel.RegistrationActivity"
     android:background="#B3E5FC">
 
     <LinearLayout
@@ -15,7 +15,7 @@
 
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/iv_reg_banner"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_marginBottom="10dp"

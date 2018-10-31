@@ -13,9 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.jessi.omnibus.R;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -38,8 +36,6 @@ public class SeatAdapter extends RecyclerView.Adapter<SeatAdapter.MyViewHolder> 
         this.seatList = seatList;
         view = context;
         namesOfSeatSelected = new ArrayList<>();
-
-
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -111,49 +107,60 @@ public class SeatAdapter extends RecyclerView.Adapter<SeatAdapter.MyViewHolder> 
             myViewHolder.ivSeat.setBackgroundColor(Color.rgb(255, 235, 59 ));
             myViewHolder.tvSeat.setTextColor(Color.rgb(255, 255, 255));
         }
-        myViewHolder.view.setNameOfSeatSelected(namesOfSeatSelected);
         myViewHolder.ivSeat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //If Seat clicked is available
                 if(seatList.get(pos).get(1).contentEquals("0"))
                 {
-                    if (numOfSeatsSelected < 5) {
+                    //If Less than 5 Seats are selected
+                    if (namesOfSeatSelected.size() < 5) {
+                        //Seat Seat Clicked as Yellow Selected
                         seatList.get(pos).set(1, "2");
                         myViewHolder.ivSeat.setBackgroundColor(Color.rgb(255, 235, 59));
                         myViewHolder.tvSeat.setTextColor(Color.rgb(0, 0, 0));
-                        ++numOfSeatsSelected;
+                        //Add Name of Seat Clicked to List of Names
                         namesOfSeatSelected.add(seatList.get(pos).get(0));
                         myViewHolder.view.setNameOfSeatSelected(namesOfSeatSelected);
+                        Toast.makeText(context, "Add Seat "+seatList.get(pos).get(0) , Toast.LENGTH_SHORT).show();
 
                     }
                     else {
                         Toast.makeText(context, "Reached Limit", Toast.LENGTH_SHORT).show();
                     }
                 }
-                else if (seatList.get(pos).get(1).contentEquals("1"))
+                else if (seatList.get(pos).get(1).contentEquals("1"))//IF SEAT IS NOT AVAILABLE TOAST
                 {
                     Toast.makeText(context, "Unavailable", Toast.LENGTH_SHORT).show();
                 }
-                else if(seatList.get(pos).get(1).contentEquals("2"))
+                else if(seatList.get(pos).get(1).contentEquals("2"))//IF SEAT IS YELLOW
                 {
+                    //SET SEAT CLICKED AS AVAILABLE AND NOT SELECTED CHANGE COLOR BACK TO GRAY
                     seatList.get(pos).set(1, "0");
                     myViewHolder.ivSeat.setBackgroundColor(Color.rgb(189, 189, 189 ));
                     myViewHolder.tvSeat.setTextColor(Color.rgb(0, 0, 0));
 
+                    //CHECK ALL NAMES IN LIST
                     for(int i = 0; i < namesOfSeatSelected.size(); i++){
+                        //IF SEAT CLICKED EXIST IN LIST
                         if (namesOfSeatSelected.get(i).contentEquals(seatList.get(pos).get(0))){
+                            //REMOVE THE NAME FROM THE LIST
                             namesOfSeatSelected.remove(i);
                         }
                     }
                     myViewHolder.view.setNameOfSeatSelected(namesOfSeatSelected);
-                    --numOfSeatsSelected;
-
+                    Toast.makeText(context, "Remove Seat "+seatList.get(pos).get(0) , Toast.LENGTH_SHORT).show();
                 }
-
-
-
             }
         });
+    }
+
+    public List<String> getNamesOfSeatSelected() {
+        return namesOfSeatSelected;
+    }
+
+    public void setNamesOfSeatSelected(List<String> namesOfSeatSelected) {
+        this.namesOfSeatSelected = namesOfSeatSelected;
     }
 
     @Override

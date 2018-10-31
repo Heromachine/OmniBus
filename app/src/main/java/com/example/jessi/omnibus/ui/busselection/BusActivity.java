@@ -12,7 +12,13 @@ import android.widget.ListView;
 import com.example.jessi.omnibus.R;
 import com.example.jessi.omnibus.data.models.BusInfoModel;
 import com.example.jessi.omnibus.data.models.BusInfoRequest;
+import com.example.jessi.omnibus.data.models.Coupons;
+import com.example.jessi.omnibus.ui.chekcout.CheckOutActivity;
+import com.example.jessi.omnibus.ui.coupon.CouponActivity;
+import com.example.jessi.omnibus.ui.passenger.PassengerActivity;
+import com.example.jessi.omnibus.ui.route.RouteActivity;
 import com.example.jessi.omnibus.ui.seat.SeatsActivity;
+import com.example.jessi.omnibus.util.AppController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,21 +31,17 @@ public class BusActivity extends AppCompatActivity implements BusContract.View{
     private BusInfoModel busInfoModel;
     private ListView listView;
     private ArrayAdapter<String> arrayAdapter;
+    private Intent checkoutIntent;
+    private Intent couponIntent;
+    private Intent passengerIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bus);
-        Bundle extras2 = getIntent().getExtras();
-
-        if (extras2 != null) {
-            busInfoRequest = new BusInfoRequest(extras2.getString("RouteID"));
-            Log.d(TAG, "onCreate: ROUTE ID = " + extras2.getString("RouteID"));
-        }
-        else {
-            Log.d(TAG, "onCreate: ROUTE ID IS EMPTY");
-            busInfoRequest = new BusInfoRequest("2");
-        }
+        passengerIntent = new Intent(BusActivity.this, PassengerActivity.class);
+        busInfoRequest = new BusInfoRequest(
+                AppController.getInstance().getSP(this, "TABLE", "RouteID"));
 
         presenter = new BusPresenter(this);
     }
@@ -49,14 +51,12 @@ public class BusActivity extends AppCompatActivity implements BusContract.View{
         return this.busInfoRequest;
     }
 
-
     @Override
     public void initListView(final BusInfoModel busInfoModel){
         this.busInfoModel = busInfoModel;
         List<String> busInfoList = new ArrayList<>();
         for(int i = 0; i < busInfoModel.getBusinformation().size(); i++)
         {
-           // String format1 = String.format("|Bus Type: %20s|", busInfoModel.getBusinformation().get(i).getBustype());
             String temp =
                     String.format("Bus Type:       %30s", busInfoModel.getBusinformation().get(i).getBustype())+
                     String.format("\nBus ID:         %30s", busInfoModel.getBusinformation().get(i).getBusid())+
@@ -81,12 +81,51 @@ public class BusActivity extends AppCompatActivity implements BusContract.View{
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                AppController.getInstance().addSP
+                        (BusActivity.this,
+                                "TABLE",
+                                "BusType",
+                                busInfoModel.getBusinformation().get(0).getBustype());
+
+                AppController.getInstance().addSP
+                        (BusActivity.this,
+                                "TABLE",
+                                "BusID",
+                                busInfoModel.getBusinformation().get(0).getBusid());
+
+                AppController.getInstance().addSP
+                        (BusActivity.this,
+                                "TABLE",
+                                "BusRegNo",
+                                busInfoModel.getBusinformation().get(0).getBusregistrationno());
+
+
+                AppController.getInstance().addSP
+                        (BusActivity.this,
+                                "TABLE",
+                                "BoardingTime",
+                                busInfoModel.getBusinformation().get(0).getBoardingtime());
+                AppController.getInstance().addSP
+                        (BusActivity.this,
+                                "TABLE",
+                                "DroppingTime",
+                                busInfoModel.getBusinformation().get(0).getDropingtime());
+                AppController.getInstance().addSP
+                        (BusActivity.this,
+                                "TABLE",
+                                "Duration",
+                                busInfoModel.getBusinformation().get(0).getJournyduration());
+
+                AppController.getInstance().addSP
+                        (BusActivity.this,
+                                "TABLE",
+                                "Fare",
+                                busInfoModel.getBusinformation().get(0).getFare());
+
                 Intent seatIntent = new Intent(BusActivity.this, SeatsActivity.class);
-                seatIntent.putExtra("BusID", busInfoModel.getBusinformation().get(i).getBusid());
                 startActivity(seatIntent);
 
             }
-
         });
     }
 }

@@ -14,6 +14,8 @@ import com.example.jessi.omnibus.R;
 import com.example.jessi.omnibus.data.models.RouteRequest;
 import com.example.jessi.omnibus.data.models.Routes;
 import com.example.jessi.omnibus.ui.busselection.BusActivity;
+import com.example.jessi.omnibus.ui.chekcout.CheckOutActivity;
+import com.example.jessi.omnibus.util.AppController;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -21,15 +23,12 @@ import java.util.List;
 
 public class RouteActivity extends AppCompatActivity implements RouteContract.View{
     private static final String TAG = "RouteActivity";
-    RouteContract.Presenter presenter;
-
+    private RouteContract.Presenter presenter;
     private ListView listView;
     private ArrayAdapter<String> arrayAdapter;
-
-    List<String> routeNameList;
-    Routes routes;
-    RouteRequest routeRequest;
-
+    private List<String> routeNameList;
+    private Routes routes;
+    private RouteRequest routeRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,20 +38,14 @@ public class RouteActivity extends AppCompatActivity implements RouteContract.Vi
     }
 
     private void initRouteRequest(){
-        List<String> coordinates = new ArrayList<>();
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            coordinates.add(extras.getString("StartLat"));
-            coordinates.add(extras.getString("StartLon"));
-            coordinates.add(extras.getString("EndLat"));
-            coordinates.add(extras.getString("EndLon"));
-        }
 
         routeRequest= new RouteRequest(
-                coordinates.get(0),
-                coordinates.get(1),
-                coordinates.get(2),
-                coordinates.get(3));
+                AppController.getInstance().getSP(this, "TABLE", "StartLat"),
+                AppController.getInstance().getSP(this, "TABLE", "StartLon"),
+                AppController.getInstance().getSP(this, "TABLE", "EndLat"),
+                AppController.getInstance().getSP(this, "TABLE", "EndLon"));
+
+
 
         presenter = new RoutePresenter(this);
     }
@@ -60,30 +53,57 @@ public class RouteActivity extends AppCompatActivity implements RouteContract.Vi
     @Override
     public void initListView(final Routes routes){
 
-        Log.d(TAG, "initListView: Routes size: " + routes.getRoute().size());
-        routeNameList = new ArrayList<>();
-        for(int i = 0; i < routes.getRoute().size(); i++){
-            routeNameList.add(routes.getRoute().get(i).getRoutename());
-        }
-        this.routes = routes;
-        arrayAdapter = new ArrayAdapter<String>
-                (
-                        RouteActivity.this,
-                        R.layout.item_route,
-                        R.id.tv_route_name,
-                        routeNameList
-                );
+        Log.d(TAG, "initListView: Routes = "+routes.toString());
+        if(routes.getRoute() == null)
+        {
+            Toast.makeText(this, "No Routes for those locations", Toast.LENGTH_SHORT).show();
 
-        listView = findViewById(R.id.lv_route);
-        listView.setAdapter(arrayAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent busIntent = new Intent(RouteActivity.this, BusActivity.class);
-                busIntent.putExtra("RouteID", routes.getRoute().get(i).getId());
-                startActivity(busIntent);
+        }
+        else
+        {
+            Log.d(TAG, "initListView: Routes size: " + routes.getRoute().size());
+            routeNameList = new ArrayList<>();
+            for(int i = 0; i < routes.getRoute().size(); i++){
+                routeNameList.add(routes.getRoute().get(i).getRoutename());
             }
-        });
+            this.routes = routes;
+            arrayAdapter = new ArrayAdapter<String>
+                    (
+                            RouteActivity.this,
+                            R.layout.item_route,
+                            R.id.tv_route_name,
+                            routeNameList
+                    );
+
+            listView = findViewById(R.id.lv_route);
+            listView.setAdapter(arrayAdapter);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                    AppController.getInstance().addSP(
+                            RouteActivity.this,
+                            "TABLE",
+                            "RouteName",
+                            routes.getRoute().get(i).getRoutename() );
+
+                    AppController.getInstance().addSP(
+                            RouteActivity.this,
+                            "TABLE",
+                            "RouteID",
+                            routes.getRoute().get(i).getId());
+
+
+                    Intent busIntent = new Intent(RouteActivity.this, BusActivity.class);
+                    startActivity(busIntent);
+
+                }
+            });
+
+        }
+
+
+
     }
 
     @Override

@@ -1,17 +1,40 @@
 package com.example.jessi.omnibus.data.models;
 
-import com.example.jessi.omnibus.ui.seat.SeatContract;
-
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SeatReservationRequest {
     private String BusID;
     private List<String> namesOfSeatSelected;
-    private String seatURL;
+    private String seatURL ;
+    Map<String, String> seatsMap;
+    String finalURL;
+
+    public String getFinalURL() {
+        return finalURL = "http://rjtmobile.com/aamir/otr/android-app/chooseseat.php?busid="+this.getBusID()+seatURL;
+    }
+
+    public void setFinalURL(String finalURL) {
+        this.finalURL = finalURL;
+    }
 
     public SeatReservationRequest(String busID, List<String> namesOfSeatSelected) {
         BusID = busID;
         this.namesOfSeatSelected = namesOfSeatSelected;
+        seatsMap = new HashMap<>();
+    }
+
+    public SeatReservationRequest() {
+    }
+
+    public Map<String, String> getSeatsMap() {
+
+        return seatsMap;
+    }
+
+    public void setSeatsMap(Map<String, String> seatsMap) {
+        this.seatsMap = seatsMap;
     }
 
     public String getBusID() {

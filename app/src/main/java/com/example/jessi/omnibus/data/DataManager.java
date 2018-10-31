@@ -5,7 +5,7 @@ import com.example.jessi.omnibus.data.models.CheckoutRequest;
 import com.example.jessi.omnibus.data.models.CouponRequest;
 import com.example.jessi.omnibus.data.models.ForgotPWRequest;
 import com.example.jessi.omnibus.data.models.LoginRequest;
-import com.example.jessi.omnibus.data.models.RegistrationReques;
+import com.example.jessi.omnibus.data.models.RegistrationRequest;
 import com.example.jessi.omnibus.data.models.RouteRequest;
 import com.example.jessi.omnibus.data.models.SeatInfoRequest;
 import com.example.jessi.omnibus.data.models.SeatReservationRequest;
@@ -22,8 +22,8 @@ public class DataManager implements IDataManger {
 
 
     @Override
-    public void networkRetrofitCallRegistration(RegistrationOnResponseListener listener, RegistrationReques registrationReques) {
-        networkHelper.networkRetrofitCallRegistration(listener, registrationReques);
+    public void networkRetrofitCallRegistration(RegistrationOnResponseListener listener, RegistrationRequest registrationRequest) {
+        networkHelper.networkRetrofitCallRegistration(listener, registrationRequest);
     }
 
     @Override

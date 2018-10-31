@@ -13,10 +13,9 @@ import com.example.jessi.omnibus.data.models.Coupons;
 import com.example.jessi.omnibus.data.models.ForgotPWRequest;
 import com.example.jessi.omnibus.data.models.ForgotPassword;
 import com.example.jessi.omnibus.data.models.LogIn;
-import com.example.jessi.omnibus.data.models.LoginModelOld;
 import com.example.jessi.omnibus.data.models.LoginRequest;
 import com.example.jessi.omnibus.data.models.RegistrationModel;
-import com.example.jessi.omnibus.data.models.RegistrationReques;
+import com.example.jessi.omnibus.data.models.RegistrationRequest;
 import com.example.jessi.omnibus.data.models.RouteRequest;
 import com.example.jessi.omnibus.data.models.Routes;
 import com.example.jessi.omnibus.data.models.SeatInfo;
@@ -37,26 +36,29 @@ public class NetworkHelper implements INetworkHelper {
 
     @Override
     public void networkRetrofitCallRegistration
-            (final IDataManger.RegistrationOnResponseListener listener, RegistrationReques registrationReques) {
+            (final IDataManger.RegistrationOnResponseListener listener, RegistrationRequest registrationRequest) {
         Log.d(TAG, "networkRetrofitCallRegistration: ");
         ApiService apiService = RetrofitInstance.getRetrofitInstance().create(ApiService.class);
-        Call<RegistrationModel> registrationModelCall = apiService.getRegistration(
-                registrationReques.getFirstName(),
-                registrationReques.getLastName(),
-                registrationReques.getAddress(),
-                registrationReques.getEmail(),
-                registrationReques.getMobile(),
-                registrationReques.getPassword()
+        Call<String> registrationModelCall = apiService.getRegistration(
+                registrationRequest.getFirstName(),
+                registrationRequest.getLastName(),
+                registrationRequest.getAddress(),
+                registrationRequest.getEmail(),
+                registrationRequest.getMobile(),
+                registrationRequest.getPassword()
         );
-        registrationModelCall.enqueue(new Callback<RegistrationModel>() {
+        registrationModelCall.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<RegistrationModel> call, Response<RegistrationModel> response) {
+            public void onResponse(Call<String> call, Response<String> response) {
                 Log.d(TAG, "onResponse: Registration passed ");
-                RegistrationModel registrationModel = response.body();
+                String reg = response.body();
+                RegistrationModel registrationModel = new RegistrationModel();
+                registrationModel.setResponse(reg);
+
                 listener.getRegistrationModel(registrationModel);
             }
             @Override
-            public void onFailure(Call<RegistrationModel> call, Throwable t) {
+            public void onFailure(Call<String> call, Throwable t) {
                 Log.d(TAG, "onFailure: Registration - " + t);
             }
         });
@@ -126,7 +128,7 @@ public class NetworkHelper implements INetworkHelper {
     @Override
     public void networkRetrofitCallRoutes
             (final IDataManger.RoutesOnResponseListener listener, RouteRequest routeRequest) {
-        Log.d(TAG, "networkRetrofitCallRoutes: ");
+
         ApiService apiService = RetrofitInstance.getRetrofitInstance()
                 .create(ApiService.class);
         Call<Routes> routesCall = apiService.getRouteList(
@@ -201,26 +203,47 @@ public class NetworkHelper implements INetworkHelper {
     public void networkRetrofitCallSeatReservation
             (final IDataManger.SeatReserveConfirmOnResponseListener listener,
              SeatReservationRequest seatReservationRequest) {
+        Log.d(TAG, "networkRetrofitCallSeatReservation: FINAL URL = "+ seatReservationRequest.getFinalURL());
+
 
         ApiService apiService = RetrofitInstance.getRetrofitInstance().create(ApiService.class);
-        Call<SeatRequestResponse> seatRequestResponseCall
-                = apiService.getSeatRequestReponse(
-                    seatReservationRequest.getBusID(),
-                    seatReservationRequest.getSeatURL()
-                );
-        seatRequestResponseCall.enqueue(new Callback<SeatRequestResponse>() {
+        Call<List<String>> listCall = apiService.getSeatRequestResponseString(seatReservationRequest.getFinalURL());
+        listCall.enqueue(new Callback<List<String>>() {
             @Override
-            public void onResponse
-                    (Call<SeatRequestResponse> call, Response<SeatRequestResponse> response) {
-                SeatRequestResponse seatRequestResponse = response.body();
-                listener.getSeatReservConfirm(seatRequestResponse);
+            public void onResponse(Call<List<String>> call, Response<List<String>> response) {
+                List<String> stringResponse = response.body();
+                SeatRequestResponse seatRequestResponse = new SeatRequestResponse();
+
+                seatRequestResponse.setMsg(stringResponse);
             }
+
             @Override
-            public void onFailure(Call<SeatRequestResponse> call, Throwable t) {
-                Log.d(TAG, "onFailure: Seat Reservation - " + t.getMessage());
+            public void onFailure(Call<List<String>> call, Throwable t) {
+
             }
         });
+
+
+//
+//        Call<SeatRequestResponse> seatRequestResponseCall
+//                = apiService.getSeatRequestResponse(seatReservationRequest.getFinalURL());
+//
+//        seatRequestResponseCall.enqueue(new Callback<SeatRequestResponse>() {
+//            @Override
+//            public void onResponse
+//                    (Call<SeatRequestResponse> call, Response<SeatRequestResponse> response) {
+//
+//                SeatRequestResponse seatRequestResponse = response.body();
+//                Log.d(TAG, "onResponse: Passed: body: "+ response.body().toString());
+//                listener.getSeatReservConfirm(seatRequestResponse);
+//            }
+//            @Override
+//            public void onFailure(Call<SeatRequestResponse> call, Throwable t) {
+//                Log.d(TAG, "onFailure: Seat Reservation - " + t.getMessage());
+//            }
+//        });
     }
+
 
     @Override
     public void networkRetrofitCallCoupons

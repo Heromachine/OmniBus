@@ -1,6 +1,6 @@
 package com.example.jessi.omnibus.data.models;
 
-public class RegistrationReques {
+public class RegistrationRequest {
     private String firstName;
     private String lastName;
     private String address;
@@ -8,16 +8,26 @@ public class RegistrationReques {
     private String mobile;
     private String password;
 
-    public RegistrationReques() {
+    boolean bValid = false;
+
+    public RegistrationRequest() {
     }
 
-    public RegistrationReques(String firstName, String lastName, String address, String email, String mobile, String password) {
+    public RegistrationRequest(String firstName, String lastName, String address, String email, String mobile, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.email = email;
         this.mobile = mobile;
         this.password = password;
+    }
+
+    public boolean isValid() {
+        return bValid;
+    }
+
+    public void setValid(boolean bValid) {
+        this.bValid = bValid;
     }
 
     public String getFirstName() {

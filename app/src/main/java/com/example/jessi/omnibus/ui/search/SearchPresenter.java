@@ -15,6 +15,7 @@ import com.example.jessi.omnibus.data.models.RegistrationModel;
 import com.example.jessi.omnibus.data.models.RouteRequest;
 import com.example.jessi.omnibus.ui.busselection.BusActivity;
 import com.example.jessi.omnibus.ui.route.RouteActivity;
+import com.example.jessi.omnibus.util.AppController;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class SearchPresenter implements SearchContract.Presenter, IDataManger.Ci
     SearchContract.View view;
     Context context;
     IDataManger dataManger;
+    List<String> coordinates;
 
     public SearchPresenter(SearchActivity searchActivity) {
         view = searchActivity;
@@ -43,13 +45,19 @@ public class SearchPresenter implements SearchContract.Presenter, IDataManger.Ci
                         this.view.getCityNames().getDepartureCityName().contentEquals("")) {
                     Toast.makeText(context, "Please Enter Both City Names", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(view.getContext(), "Search Was pressed", Toast.LENGTH_SHORT).show();
-                    List<String> coordinates = prepareCoordinates(this.view.getCityNames(), this.view.getCitiesModel());
+                    //Toast.makeText(view.getContext(), "Search Was pressed", Toast.LENGTH_SHORT).show();
+                    coordinates = prepareCoordinates(this.view.getCityNames(), this.view.getCitiesModel());
                     Intent activity = new Intent(context, RouteActivity.class);
                     activity.putExtra("StartLat", coordinates.get(0));
                     activity.putExtra("StartLon", coordinates.get(1));
                     activity.putExtra("EndLat", coordinates.get(2));
                     activity.putExtra("EndLon", coordinates.get(3));
+
+                    AppController.getInstance().addSP(context, "TABLE", "StartLat",  coordinates.get(0));
+                    AppController.getInstance().addSP(context, "TABLE", "StartLon",  coordinates.get(1));
+                    AppController.getInstance().addSP(context, "TABLE", "EndLat",  coordinates.get(2));
+                    AppController.getInstance().addSP(context, "TABLE", "EndLon",  coordinates.get(3));
+
                     context.startActivity(activity);
                 }
                 break;
@@ -57,10 +65,18 @@ public class SearchPresenter implements SearchContract.Presenter, IDataManger.Ci
     }
 
     @Override
+    public void setDateSelected(String dateSelected) {
+
+    }
+
+    @Override
     public void setCitiesModel(CitiesModel citiesModel) {
 
+
         Log.d(TAG, "setCitiesModel: cityModels size: " + citiesModel.getCity().size());
+
         view.setCitiesModel(citiesModel);
+
     }
 
     private List<String> prepareCoordinates(CityNamesModel cityNamesModel, CitiesModel citiesModel) {
@@ -82,19 +98,3 @@ public class SearchPresenter implements SearchContract.Presenter, IDataManger.Ci
         return coordinates;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

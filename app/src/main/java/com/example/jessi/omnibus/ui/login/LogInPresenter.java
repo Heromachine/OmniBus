@@ -8,12 +8,13 @@ import android.widget.Toast;
 import com.example.jessi.omnibus.R;
 import com.example.jessi.omnibus.data.DataManager;
 import com.example.jessi.omnibus.data.IDataManger;
+import com.example.jessi.omnibus.data.models.ForgotPassword;
 import com.example.jessi.omnibus.data.models.LogIn;
 import com.example.jessi.omnibus.data.models.LoginModelOld;
 import com.example.jessi.omnibus.ui.registration.RegistrationActivity;
 import com.example.jessi.omnibus.ui.search.SearchActivity;
 
-public class LogInPresenter implements  LogInContract.Presenter, IDataManger.LogInOnResponseListener {
+public class LogInPresenter implements  LogInContract.Presenter, IDataManger.LogInOnResponseListener, IDataManger.ForgotPWOnResponseListener {
 
     LogInContract.View view ;
     Context context;
@@ -41,6 +42,11 @@ public class LogInPresenter implements  LogInContract.Presenter, IDataManger.Log
             case R.id.tv_forgot_pw:
                 Toast.makeText(view.getContext(), "Forgot Password Clicked", Toast.LENGTH_SHORT).show();
                 break;
+            case R.id.btn_reset:
+                Toast.makeText(view.getContext(), "Rest", Toast.LENGTH_SHORT).show();
+                dataManger.networkRetrofitCallForgotPW(this, this.view.getPasswordRequest());
+                break;
+            
         }
     }
 
@@ -48,5 +54,10 @@ public class LogInPresenter implements  LogInContract.Presenter, IDataManger.Log
     @Override
     public void passLogin(LogIn logIn) {
         view.setLoginModel(logIn);
+    }
+
+    @Override
+    public void getForgotPWModel(ForgotPassword forgotPassword) {
+        view.setForgotPassword(forgotPassword);
     }
 }

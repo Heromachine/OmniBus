@@ -14,12 +14,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jessi.omnibus.R;
 import com.example.jessi.omnibus.data.models.CityNamesModel;
 import com.example.jessi.omnibus.data.models.CitiesModel;
+import com.example.jessi.omnibus.util.AppController;
+import com.github.sundeepk.compactcalendarview.CompactCalendarView;
+import com.github.sundeepk.compactcalendarview.domain.Event;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class SearchActivity extends AppCompatActivity
@@ -28,12 +36,12 @@ public class SearchActivity extends AppCompatActivity
     SearchContract.Presenter presenter;
     CitiesModel citiesModel;
     List<String> cityNameList;
-
     EditText etCityDeparture;
     EditText etCityArrival;
-
+    TextView tvSelectDate;
     Button btnSearch;
-
+    String dateSelected;
+    boolean bDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +49,6 @@ public class SearchActivity extends AppCompatActivity
         setContentView(R.layout.activity_search);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,20 +69,65 @@ public class SearchActivity extends AppCompatActivity
 
         //TODO ADD FUNCTIONS
         presenter = new SearchPresenter(this);
-
         etCityDeparture = findViewById(R.id.et_city_departure);
         etCityArrival = findViewById(R.id.et_city_arrival);
-
         btnSearch = findViewById(R.id.btn_search);
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (bDate != true) {
+                    Toast.makeText(SearchActivity.this, "Please Enter Date", Toast.LENGTH_SHORT).show();
 
-                if (etCityArrival.getText().toString() != "" && etCityDeparture.getText().toString() != "") {
-                    presenter.onButtonClicked(view);
-                } else {
-                    Toast.makeText(SearchActivity.this, "Please Enter Both City Names", Toast.LENGTH_SHORT).show();
+                }else {
+                    if (etCityArrival.getText().toString() != "" && etCityDeparture.getText().toString() != "") {
+                        presenter.onButtonClicked(view);
+                        presenter.setDateSelected(dateSelected);
+                    } else {
+                        Toast.makeText(SearchActivity.this, "Please Enter Both City Names", Toast.LENGTH_SHORT).show();
+                    }
                 }
+            }
+        });
+
+        this.tvSelectDate = findViewById(R.id.tv_select_date);
+        final CompactCalendarView compactCalendarView = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
+        compactCalendarView.setFirstDayOfWeek(Calendar.SUNDAY);
+        compactCalendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
+            @Override
+            public void onDayClick(Date dateClicked) {
+                Calendar c = Calendar.getInstance();
+                c.set(Calendar.HOUR_OF_DAY, 0);
+                c.set(Calendar.MINUTE, 0);
+                c.set(Calendar.SECOND, 0);
+                c.set(Calendar.MILLISECOND, 0);
+                Date today = c.getTime();
+                SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy");
+                String dateString = format.format(dateClicked);
+                dateClicked = null;
+
+                try {
+                    dateClicked = format.parse( dateString );
+                    dateSelected = dateString;
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                if(!dateClicked.before(today)&& dateClicked.after(today) )
+                {
+                    tvSelectDate.setText(
+                            dateString);
+                    AppController.getInstance().addSP(SearchActivity.this, "TABLE", "Date", dateSelected);
+                    bDate = true;
+                }
+                else
+                {
+                    //Toast.makeText(SearchActivity.this, "DateSelected: "+ dateClicked, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SearchActivity.this, "Past Date Invalid", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onMonthScroll(Date firstDayOfNewMonth) {
 
             }
         });
@@ -153,6 +205,4 @@ public class SearchActivity extends AppCompatActivity
         CityNamesModel cityNamesModel = new CityNamesModel(etCityDeparture.getText().toString(), etCityArrival.getText().toString());
         return cityNamesModel;
     }
-
-
 }

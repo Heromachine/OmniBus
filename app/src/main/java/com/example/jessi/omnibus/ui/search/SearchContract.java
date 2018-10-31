@@ -9,9 +9,9 @@ public interface SearchContract {
         void setCitiesModel(CitiesModel citiesModel);
         CitiesModel getCitiesModel();
         CityNamesModel getCityNames();
-
     }
     interface Presenter{
         void onButtonClicked(android.view.View view);
+        void setDateSelected(String dateSelected);
     }
 }

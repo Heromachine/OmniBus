@@ -12,18 +12,22 @@ import com.example.jessi.omnibus.data.models.Routes;
 import com.example.jessi.omnibus.data.models.SeatInfo;
 import com.example.jessi.omnibus.data.models.SeatRequestResponse;
 
+import java.lang.annotation.Target;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.PUT;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 import retrofit2.http.Url;
 
 public interface ApiService {
 
     //http://rjtmobile.com/aamir/otr/android-app/registration.php?firstname=aamir&lastname=husain&address=India&email=aa@aa.com&mobile=9876543210&password=12345678
     @GET("registration.php")
-    Call<RegistrationModel>getRegistration(
+    Call<String>getRegistration(
             @Query("firstname") String firstname,
             @Query("lastname") String lastname,
             @Query("address") String address,
@@ -85,10 +89,20 @@ public interface ApiService {
    // "http://rjtmobile.com/aamir/otr/android-app/chooseseat.php?busid=102&s1=1
    // http://rjtmobile.com/aamir/otr/android-app/chooseseat.php?busid=102&s2=1&s3=1"
 
+//    @GET("chooseseat.php")
+//    Call<SeatRequestResponse> getSeatRequestResponse(
+//            @Query("busid") String busid,
+//             String url);
+
     @GET("chooseseat.php")
-    Call<SeatRequestResponse> getSeatRequestReponse(
+    Call<SeatRequestResponse> getSeatRequestResponse(
             @Query("busid") String busid,
-            @Url String url);
+            @QueryMap Map<String, String> seats);
+    @GET
+    Call<SeatRequestResponse> getSeatRequestResponse(@Url String url);
+
+    @GET
+    Call<List<String>> getSeatRequestResponseString(@Url String url);
 
     //"http://rjtmobile.com/aamir/otr/android-app/ticketcheckoutinfo.php?
 //    @GET("ticketcheckoutinfo.php")

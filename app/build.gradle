@@ -47,7 +47,12 @@ dependencies {
     //Calender
     implementation 'com.github.sundeepk:compact-calendar-view:3.0.0'
     //Simplify
-    implementation 'com.simplify:simplify-android:3.2.3'
+    implementation 'com.simplify:simplify-android:3.0.0'
     //Animation
     implementation 'com.android.support:support-dynamic-animation:28.0.0'
+
+    //RxValidator
+    implementation 'com.github.phajduk:RxValidator:94fdca4ec6504985d6187080f1d9e9580703c082'
+
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.0'
 }

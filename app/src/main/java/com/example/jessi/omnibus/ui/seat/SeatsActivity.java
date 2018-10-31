@@ -1,5 +1,6 @@
 package com.example.jessi.omnibus.ui.seat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -11,8 +12,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jessi.omnibus.R;
+import com.example.jessi.omnibus.data.models.Coupons;
 import com.example.jessi.omnibus.data.models.SeatInfoRequest;
 import com.example.jessi.omnibus.data.models.SeatReservationRequest;
+import com.example.jessi.omnibus.ui.chekcout.CheckOutActivity;
+import com.example.jessi.omnibus.ui.coupon.CouponActivity;
+import com.example.jessi.omnibus.ui.passenger.PassengerActivity;
+import com.example.jessi.omnibus.util.AppController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,36 +45,62 @@ public class SeatsActivity extends AppCompatActivity implements SeatContract.Vie
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private String busID;
+    private Intent passengerIntent;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seat);
-
+        ButterKnife.bind(this);
         namesOfSeatSelected = new ArrayList<>();
         seatCount = findViewById(R.id.tv_seat_no);
 
-        ButterKnife.bind(this);
-        Bundle extras2 = getIntent().getExtras();
-        if (extras2 != null) {
-            seatInfoRequest = new SeatInfoRequest(extras2.getString("BusID"));
-            busID = extras2.getString("BusID");
-            Log.d(TAG, "onCreate: Seat Bundle Good");
-        }
-        else {
-            Toast.makeText(this, "EMPTY BUNDLE", Toast.LENGTH_SHORT).show();
-            seatInfoRequest = new SeatInfoRequest("102");
-            busID = "102";
-        }
+        Log.d(TAG, "onCreate: BusID = "+   AppController.getInstance().getSP(
+                this,
+                "TABLE",
+                "BusID"));
+
+        seatInfoRequest
+                = new SeatInfoRequest(
+                AppController.getInstance().getSP(
+                        this,
+                        "TABLE",
+                        "BusID"));
+
 
         presenter = new SeatPresenter(this);
     }
 
     @OnClick(R.id.btn_seat)
     public void onViewClicked(View view) {
-        seatReservationRequest = new SeatReservationRequest(busID, namesOfSeatSelected);
 
+        if(namesOfSeatSelected.size() != 0){
+            seatReservationRequest = new SeatReservationRequest(busID, namesOfSeatSelected);
 
+            for(int i = 0; i < namesOfSeatSelected.size(); i++)
+            {
+                AppController.getInstance().addSP(
+                        SeatsActivity.this,
+                        "TABLE", ("SeatName_"+i),
+                        namesOfSeatSelected.get(i));
+            }
+
+            AppController.getInstance().addSP(
+                            SeatsActivity.this,
+                            "TABLE",
+                            "SeatCount",
+                            String.valueOf(namesOfSeatSelected.size()));
+
+            passengerIntent = new Intent(SeatsActivity.this, PassengerActivity.class);
+            startActivity(passengerIntent);
+        }
+        else
+        {
+            Toast.makeText(this, "No Seats Selected", Toast.LENGTH_SHORT).show();
+        }
+
+        Log.d(TAG, "onViewClicked: SEAT: Names of Seats Size = "+namesOfSeatSelected.size());
     }
 
     @Override
@@ -94,7 +126,6 @@ public class SeatsActivity extends AppCompatActivity implements SeatContract.Vie
     @Override
     public void setNameOfSeatSelected(List<String> names) {
         this.namesOfSeatSelected = names;
-
     }
 
     @Override

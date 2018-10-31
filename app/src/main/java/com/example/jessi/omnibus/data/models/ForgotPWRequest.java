@@ -7,6 +7,9 @@ public class ForgotPWRequest {
         this.mobile = mobile;
     }
 
+    public ForgotPWRequest() {
+    }
+
     public String getMobile() {
         return mobile;
     }

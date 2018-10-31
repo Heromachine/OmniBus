@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#B3E5FC"
     tools:context=".ui.chekcout.CheckOutActivity"
-    android:background="#B3E5FC">
+    tools:layout_editor_absoluteY="81dp">
 
     <TextView
         android:id="@+id/tv_checkout_title"
         android:layout_width="114dp"
         android:layout_height="0dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="1dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="33dp"
+        android:layout_marginBottom="18dp"
         android:text="Check Out"
-        app:layout_constraintBottom_toTopOf="@+id/cardView3"
-        app:layout_constraintStart_toStartOf="@+id/cardView3"
-        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="15dp"
         android:textStyle="bold"
-        android:textSize="15dp"/>
+        app:layout_constraintBottom_toTopOf="@+id/cardView3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardView3"
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="9dp"
         android:layout_marginEnd="9dp"
-        android:layout_marginBottom="29dp"
+        android:layout_marginBottom="45dp"
         app:layout_constraintBottom_toTopOf="@+id/cardView4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,27 +55,6 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:text="Bus ID: " />
-
-            <TextView
-                android:id="@+id/tv_fare_invoice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Fare: " />
-
-            <TextView
-                android:id="@+id/tv_coupon_invoice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Coupon Discount: " />
-
-            <TextView
-                android:id="@+id/tv_service_tax"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Service Tax: " />
 
             <TextView
                 android:id="@+id/tv_journey_date"
@@ -112,11 +91,34 @@
                 android:padding="10dp"
                 android:text="Passenger No.:" />
 
-            <EditText
+            <TextView
+                android:id="@+id/tv_coupon_invoice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:hint="Coupon" />
+                android:padding="10dp"
+                android:text="Coupon Discount: " />
+
+            <TextView
+                android:id="@+id/tv_service_tax"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Service Tax: " />
+
+            <TextView
+                android:id="@+id/tv_fare_invoice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Fare: " />
+            <TextView
+                android:id="@+id/tv_total"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"
+                android:textSize="20dp"/>
 
         </LinearLayout>
     </android.support.v7.widget.CardView>
@@ -125,7 +127,7 @@
         android:id="@+id/cardView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="17dp"
+        android:layout_marginBottom="34dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -90,6 +90,7 @@
                 android:textSize="30dp" />
 
             <TextView
+                android:id="@+id/tv_select_date"
                 android:layout_width="317dp"
                 android:layout_height="wrap_content"
                 android:background="#212121"

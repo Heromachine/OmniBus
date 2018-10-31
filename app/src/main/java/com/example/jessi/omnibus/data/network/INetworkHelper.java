@@ -4,10 +4,9 @@ import com.example.jessi.omnibus.data.IDataManger;
 import com.example.jessi.omnibus.data.models.BusInfoRequest;
 import com.example.jessi.omnibus.data.models.CheckoutRequest;
 import com.example.jessi.omnibus.data.models.CouponRequest;
-import com.example.jessi.omnibus.data.models.Coupons;
 import com.example.jessi.omnibus.data.models.ForgotPWRequest;
 import com.example.jessi.omnibus.data.models.LoginRequest;
-import com.example.jessi.omnibus.data.models.RegistrationReques;
+import com.example.jessi.omnibus.data.models.RegistrationRequest;
 import com.example.jessi.omnibus.data.models.RouteRequest;
 import com.example.jessi.omnibus.data.models.SeatInfoRequest;
 import com.example.jessi.omnibus.data.models.SeatReservationRequest;
@@ -15,7 +14,7 @@ import com.example.jessi.omnibus.data.models.SeatReservationRequest;
 public interface INetworkHelper {
 
     void networkRetrofitCallRegistration
-            (IDataManger.RegistrationOnResponseListener listener, RegistrationReques registrationReques);
+            (IDataManger.RegistrationOnResponseListener listener, RegistrationRequest registrationRequest);
 
     void networkRetrofitCallLogin
             (IDataManger.LogInOnResponseListener listener, LoginRequest loginRequest);

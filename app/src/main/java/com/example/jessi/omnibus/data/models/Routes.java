@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 public class Routes{
 
 	@SerializedName("route")
-	private List<RouteItem> route;
+	private List<RouteItem> route = null;
 
 	public void setRoute(List<RouteItem> route){
 		this.route = route;

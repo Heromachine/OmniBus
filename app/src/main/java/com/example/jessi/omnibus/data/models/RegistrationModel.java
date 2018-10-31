@@ -2,30 +2,23 @@ package com.example.jessi.omnibus.data.models;
 
 public class RegistrationModel {
 
-    String mobile;
-    String password;
+    String response;
+
 
     public RegistrationModel() {
     }
 
-    public RegistrationModel(String mobile, String password) {
-        this.mobile = mobile;
-        this.password = password;
+    public RegistrationModel(String response) {
+        this.response = response;
+
     }
 
-    public String getMobile() {
-        return mobile;
+    public String getResponse() {
+        return response;
     }
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
+    public void setResponse(String mobile) {
+        this.response = mobile;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

@@ -1,5 +1,6 @@
 package com.example.jessi.omnibus.ui.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -15,6 +16,7 @@ import com.example.jessi.omnibus.data.models.ForgotPWRequest;
 import com.example.jessi.omnibus.data.models.ForgotPassword;
 import com.example.jessi.omnibus.data.models.LogIn;
 import com.example.jessi.omnibus.data.models.LoginRequest;
+import com.example.jessi.omnibus.ui.search.SearchActivity;
 import com.github.phajduk.rxvalidator.RxValidationResult;
 import com.github.phajduk.rxvalidator.RxValidator;
 
@@ -48,7 +50,7 @@ public class LogInActivity extends AppCompatActivity implements LogInContract.Vi
     LogInContract.Presenter presenter;
     LoginRequest loginRequest;
     LogIn loginModel;
-
+    boolean proper = false;
 
 
     private boolean validationPassed = false;
@@ -71,13 +73,11 @@ public class LogInActivity extends AppCompatActivity implements LogInContract.Vi
         switch (view.getId()) {
             case R.id.btn_login_log:
 
-                if (loginRequest.isbSuccess())
+                if (proper)
                 {
                     loginRequest.setMobile(etMobileLog.getText().toString());
                     loginRequest.setPassword(etPasswordLog.getText().toString());
                     presenter.onButtonClicked(view);
-                    Toast.makeText
-                            (this, "LoginModelOld Model: " + loginModel.getEmail(), Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
@@ -102,6 +102,16 @@ public class LogInActivity extends AppCompatActivity implements LogInContract.Vi
     @Override
     public void setLoginModel(LogIn model) {
         loginModel = model;
+
+        if (loginModel.getMsg().contentEquals("success"))
+        {
+            Intent intentSearch = new Intent(this, SearchActivity.class);
+            startActivity(intentSearch);
+        }
+        Log.d(TAG, "setLoginModel: "+ loginModel.getMsg());
+        Toast.makeText(this, loginModel.getMsg(), Toast.LENGTH_SHORT).show();
+
+
     }
 
     @Override
@@ -172,7 +182,7 @@ public class LogInActivity extends AppCompatActivity implements LogInContract.Vi
                         Log.i(TAG, "Validation etResult " + etResult.toString());
                         if(etResult.isProper())
                         {
-                            loginRequest.setbSuccess(true);
+                            proper = true;
                         }
 
                     }
@@ -199,7 +209,7 @@ public class LogInActivity extends AppCompatActivity implements LogInContract.Vi
 
                         if(etResult.isProper())
                         {
-                            loginRequest.setbSuccess(true);
+                            proper = true;
                         }
                     }
                 }, new Action1<Throwable>() {

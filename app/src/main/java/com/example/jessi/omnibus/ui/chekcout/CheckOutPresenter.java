@@ -1,6 +1,7 @@
 package com.example.jessi.omnibus.ui.chekcout;
 
 import android.content.Context;
+import android.view.View;
 
 import com.example.jessi.omnibus.data.DataManager;
 import com.example.jessi.omnibus.data.IDataManger;
@@ -19,6 +20,13 @@ public class CheckOutPresenter implements CheckOutContract.Presenter, IDataMange
 
     @Override
     public void getCheckoutConfirmation(String string) {
+        this.view.setCheckoutConfirmation(string);
+
+    }
+
+
+    @Override
+    public void onButtonClicked(View view) {
 
     }
 }

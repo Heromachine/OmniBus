@@ -34,7 +34,8 @@
         <activity android:name=".ui.route.RouteActivity" />
         <activity android:name=".ui.coupon.CouponActivity" />
         <activity android:name=".ui.simplify.SimplifyActivity" />
-        <activity android:name=".ui.Purchased.PurchasedActivity"></activity>
+        <activity android:name=".ui.purchased.PurchasedActivity" />
+        <activity android:name=".ui.technology.TechnologyActivity"></activity>
     </application>
 
 </manifest>

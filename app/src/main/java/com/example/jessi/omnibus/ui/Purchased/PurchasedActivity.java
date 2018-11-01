@@ -1,4 +1,4 @@
-package com.example.jessi.omnibus.ui.Purchased;
+package com.example.jessi.omnibus.ui.purchased;
 
 import android.content.Intent;
 import android.os.Bundle;

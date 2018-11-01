@@ -26,7 +26,7 @@ public class PaymentPresenter implements PaymentContract.Presenter , IDataManger
 
 
     @Override
-    public void getCouponValidation(String string) {
-
+    public void getCouponValidation(CouponValidation couponValidation) {
+        view.setCouponValidation(couponValidation);
     }
 }

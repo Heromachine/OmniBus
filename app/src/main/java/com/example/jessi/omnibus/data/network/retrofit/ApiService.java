@@ -81,7 +81,7 @@ public interface ApiService {
 
     //http://rjtmobile.com/aamir/otr/android-app/coupon_validation.php?couponno=54316544
     @GET("coupon_validation.php")
-    Call<CouponValidation> getCouponValidation(
+    Call<List<CouponValidation>> getCouponValidation(
             @Query("couponno") String couponNo
     );
 
@@ -101,8 +101,13 @@ public interface ApiService {
     @GET
     Call<SeatRequestResponse> getSeatRequestResponse(@Url String url);
 
+//    @GET
+//    Call<List<String>> getSeatRequestResponseString(@Url String url);
+
+
+
     @GET
-    Call<List<String>> getSeatRequestResponseString(@Url String url);
+    Call<SeatRequestResponse> getSeatRequestResponseString(@Url String url);
 
     //"http://rjtmobile.com/aamir/otr/android-app/ticketcheckoutinfo.php?
 //    @GET("ticketcheckoutinfo.php")

@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.example.jessi.omnibus.R;
 import com.example.jessi.omnibus.ui.login.LogInActivity;
+import com.example.jessi.omnibus.ui.technology.TechnologyActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -46,7 +47,7 @@ public class SplashActivity extends AppCompatActivity {
 
         springAnim.start();
 
-        intent = new Intent(this, LogInActivity.class);
+        intent = new Intent(this, TechnologyActivity.class);
 
         splashScreen(3000);
 

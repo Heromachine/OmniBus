@@ -23,7 +23,7 @@
             android:layout_height="252dp"
             android:padding="15dp"
             app:srcCompat="@drawable/omnibus_icon"
-            android:visibility="invisible"/>
+            />
 
         <TextView
             android:id="@+id/tv_omnibus_title"

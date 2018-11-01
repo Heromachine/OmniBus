@@ -54,8 +54,8 @@ public class NetworkHelper implements INetworkHelper {
                 String reg = response.body();
                 RegistrationModel registrationModel = new RegistrationModel();
                 registrationModel.setResponse(reg);
-
                 listener.getRegistrationModel(registrationModel);
+
             }
             @Override
             public void onFailure(Call<String> call, Throwable t) {
@@ -86,20 +86,20 @@ public class NetworkHelper implements INetworkHelper {
     @Override
     public void networkRetrofitCallLogin
             (final IDataManger.LogInOnResponseListener listener, LoginRequest loginRequest) {
-        Log.d(TAG, "networkRetrofitCallLogin: ");
+        Log.d(TAG, "!networkRetrofitCallLogin: ");
         ApiService apiService = RetrofitInstance.getRetrofitInstance().create(ApiService.class);
         Call<List<LogIn>> loginCall = apiService.getLogin(loginRequest.getMobile(), loginRequest.getPassword());
         loginCall.enqueue(new Callback<List<LogIn>>() {
             @Override
             public void onResponse(Call<List<LogIn>> call, Response<List<LogIn>> response) {
-                Log.d(TAG, "onResponse: ");
-                LogIn logIn = response.body().get(0);
-                listener.passLogin(logIn);
+                Log.d(TAG, "onResponse: " + response.body());
+                List<LogIn> logIn = response.body();
+                listener.passLogin(logIn.get(0));
             }
 
             @Override
             public void onFailure(Call<List<LogIn>> call, Throwable t) {
-                Log.d(TAG, "onFailure: Forgot PW - " + t.getMessage());
+                Log.d(TAG, "onFailure: Login - " + t.getMessage());
             }
         });
     }
@@ -207,19 +207,21 @@ public class NetworkHelper implements INetworkHelper {
 
 
         ApiService apiService = RetrofitInstance.getRetrofitInstance().create(ApiService.class);
-        Call<List<String>> listCall = apiService.getSeatRequestResponseString(seatReservationRequest.getFinalURL());
-        listCall.enqueue(new Callback<List<String>>() {
+        Call<SeatRequestResponse> listCall = apiService.getSeatRequestResponseString(seatReservationRequest.getFinalURL());
+        listCall.enqueue(new Callback<SeatRequestResponse>() {
             @Override
-            public void onResponse(Call<List<String>> call, Response<List<String>> response) {
-                List<String> stringResponse = response.body();
+            public void onResponse(Call<SeatRequestResponse> call, Response<SeatRequestResponse> response) {
+                SeatRequestResponse stringResponse = response.body();
+                Log.d(TAG, "onResponse: response = "+ response.body().getMsg());
                 SeatRequestResponse seatRequestResponse = new SeatRequestResponse();
+                seatRequestResponse.setMsg(stringResponse.getMsg());
 
-                seatRequestResponse.setMsg(stringResponse);
+                listener.getSeatReservConfirm(seatRequestResponse);
             }
 
             @Override
-            public void onFailure(Call<List<String>> call, Throwable t) {
-
+            public void onFailure(Call<SeatRequestResponse> call, Throwable t) {
+                Log.d(TAG, "onFailure: "+ t.getMessage());
             }
         });
 
@@ -267,15 +269,15 @@ public class NetworkHelper implements INetworkHelper {
     public void networkRetrofitCallCouponValidation
             (final IDataManger.CouponValidationOnResponseListener listener, CouponRequest couponRequest) {
         ApiService apiService = RetrofitInstance.getRetrofitInstance().create(ApiService.class);
-        Call<CouponValidation> couponValidationCall = apiService.getCouponValidation(couponRequest.getCouponNo());
-        couponValidationCall.enqueue(new Callback<CouponValidation>() {
+        Call<List<CouponValidation>> couponValidationCall = apiService.getCouponValidation(couponRequest.getCouponNo());
+        couponValidationCall.enqueue(new Callback<List<CouponValidation>>() {
             @Override
-            public void onResponse(Call<CouponValidation> call, Response<CouponValidation> response) {
-                CouponValidation couponValidation = response.body();
-                listener.getCouponValidation(couponValidation.toString());
+            public void onResponse(Call<List<CouponValidation>> call, Response<List<CouponValidation>> response) {
+                List<CouponValidation> couponValidation = response.body();
+                listener.getCouponValidation(couponValidation.get(0));
             }
             @Override
-            public void onFailure(Call<CouponValidation> call, Throwable t) {
+            public void onFailure(Call<List<CouponValidation>> call, Throwable t) {
                 Log.d(TAG, "onFailure: Coupon validation - " + t.getMessage());
             }
         });

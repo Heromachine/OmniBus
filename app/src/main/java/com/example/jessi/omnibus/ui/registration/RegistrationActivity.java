@@ -175,7 +175,6 @@ public class RegistrationActivity extends AppCompatActivity implements Registrat
         RxValidator.createFor(this.etEmailReg)
                 .nonEmpty()
                 .email()
-                .digitOnly()
                 .minLength(9)
                 .onFocusChanged()
                 .toObservable()

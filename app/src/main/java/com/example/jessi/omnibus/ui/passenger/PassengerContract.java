@@ -1,14 +1,18 @@
 package com.example.jessi.omnibus.ui.passenger;
 
-import com.example.jessi.omnibus.data.models.CouponRequest;
+import android.view.View;
+
 import com.example.jessi.omnibus.data.models.SeatRequestResponse;
 import com.example.jessi.omnibus.data.models.SeatReservationRequest;
+import com.example.jessi.omnibus.ui.seat.SeatContract;
 
 public interface PassengerContract  {
-    interface View{
+    interface iView {
         void setSeatReservation(SeatRequestResponse seatRequestResponse);
 
         SeatReservationRequest getSeatReservationRequest();
     }
-    interface Presenter{}
+    interface Presenter{
+        void onButtonClicked(View view);
+    }
 }

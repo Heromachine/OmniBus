@@ -4,13 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.jessi.omnibus.R;
 import com.example.jessi.omnibus.data.models.CheckoutRequest;
 import com.example.jessi.omnibus.data.models.Coupons;
-import com.example.jessi.omnibus.ui.Purchased.PurchasedActivity;
+import com.example.jessi.omnibus.ui.purchased.PurchasedActivity;
 import com.example.jessi.omnibus.util.AppController;
 
 import butterknife.BindView;
@@ -80,16 +81,15 @@ public class CheckOutActivity extends AppCompatActivity implements CheckOutContr
         String temp = "";
         for (int i = 0; i < seatCount; i++) {
 
-            temp += AppController.getInstance().getSP(this, "TABLE", "FirstName_" + i);//
-            temp += "\n";
+            temp += "Passenger "+(i+1)+ ": "+AppController.getInstance().getSP(this, "TABLE", "FirstName_" + i);
+            temp += " ";
             temp += AppController.getInstance().getSP(this, "TABLE", "LastName_" + i);//
-            temp += "\n";
+            temp += ", Age: ";
             temp += AppController.getInstance().getSP(this, "TABLE", "Age_" + i);//
-            temp += "\n";
+            temp += ", Gender: ";
             temp += AppController.getInstance().getSP(this, "TABLE", "Gender_" + i);//
-            temp += "\n";
-            temp += AppController.getInstance().getSP(this, "TABLE", "SeatNo_" + i);//
-            temp += "\n";
+            temp += ", Seat: ";
+            temp += AppController.getInstance().getSP(this, "TABLE", "SeatNo_" + i);
         }
 
         fare = Double.valueOf(AppController.getInstance().getSP(this, "TABLE", "Fare"));
@@ -117,13 +117,21 @@ public class CheckOutActivity extends AppCompatActivity implements CheckOutContr
     }
 
     @OnClick(R.id.btn_purchase)
-    public void onViewClicked() {
+    public void onViewClicked(View view) {
+
         Intent intent = new Intent(CheckOutActivity.this, PurchasedActivity.class);
         startActivity(intent);
+        presenter.onButtonClicked(view);
     }
 
     @Override
     public CheckoutRequest getCheckOutRequest() {
         return checkoutRequest;
+    }
+
+    @Override
+    public void setCheckoutConfirmation(String string) {
+
+
     }
 }

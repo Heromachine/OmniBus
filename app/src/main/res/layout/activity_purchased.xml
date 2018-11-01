@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.Purchased.PurchasedActivity">
+    tools:context=".ui.purchased.PurchasedActivity"
+    tools:layout_editor_absoluteY="81dp">
 
     <ImageView
         android:id="@+id/imageView2"
@@ -22,6 +23,7 @@
         android:id="@+id/thankyou"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="1dp"
         android:layout_marginBottom="64dp"
         android:text="Thank you for riding OmniBus!"
         app:layout_constraintBottom_toTopOf="@+id/btn_exit"
@@ -32,30 +34,29 @@
         android:id="@+id/btn_exit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="15dp"
         android:layout_marginBottom="63dp"
         android:background="@color/colorPrimaryDark"
         android:gravity="center"
         android:padding="5dp"
-        android:text="Search New Route"
+        android:text="Exit"
         android:textColor="@color/colorIcons"
         app:layout_constraintBottom_toTopOf="@+id/btn_search"
-        app:layout_constraintEnd_toEndOf="@+id/thankyou"
+        app:layout_constraintStart_toStartOf="@+id/btn_search"
         app:layout_constraintTop_toBottomOf="@+id/thankyou" />
 
     <Button
         android:id="@+id/btn_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
         android:layout_marginBottom="98dp"
         android:background="@color/colorPrimaryDark"
         android:gravity="center"
         android:padding="5dp"
-        android:text="Exit"
+        android:text="Search"
         android:textColor="@color/colorIcons"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/btn_exit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_exit" />
 
 

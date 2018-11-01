@@ -2,6 +2,7 @@ package com.example.jessi.omnibus.data;
 
 import com.example.jessi.omnibus.data.models.BusInfoModel;
 import com.example.jessi.omnibus.data.models.CitiesModel;
+import com.example.jessi.omnibus.data.models.CouponValidation;
 import com.example.jessi.omnibus.data.models.Coupons;
 import com.example.jessi.omnibus.data.models.ForgotPassword;
 import com.example.jessi.omnibus.data.models.LogIn;
@@ -50,7 +51,7 @@ public interface IDataManger extends INetworkHelper {
 
     }
     interface CouponValidationOnResponseListener{
-        void getCouponValidation(String string);
+        void getCouponValidation(CouponValidation couponValidation);
     }
     interface CheckoutOnResposneListener{
         void getCheckoutConfirmation(String string);

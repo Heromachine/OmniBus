@@ -50,6 +50,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentContrac
         ButterKnife.bind(this);
 
         CouponNumber = new CouponRequest(AppController.getInstance().getSP(this, "TABLE", "CouponNo"));
+        Log.d(TAG, "onCreate: Coupog Number" + CouponNumber.getCouponNo());
         presenter = new PaymentPresenter(PaymentActivity.this);
 
         simplify = new Simplify();
@@ -104,8 +105,11 @@ public class PaymentActivity extends AppCompatActivity implements PaymentContrac
             AppController.getInstance().addSP(PaymentActivity.this, "TABLE", "Discount", "0");
             Toast.makeText(this,  couponValidation.getMsg(), Toast.LENGTH_SHORT).show();
         }
-        else
+        else if(couponValidation.getMsg().contentEquals("success"))
         {
+        {
+            Toast.makeText(this,  couponValidation.getMsg(), Toast.LENGTH_SHORT).show();
+        }
             AppController.getInstance().addSP(PaymentActivity.this, "TABLE", "Discount", couponValidation.getDiscount());
         }
         

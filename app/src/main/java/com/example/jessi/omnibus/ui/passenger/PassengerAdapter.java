@@ -1,18 +1,21 @@
 package com.example.jessi.omnibus.ui.passenger;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.jessi.omnibus.R;
 import com.example.jessi.omnibus.data.models.Passenger;
-import com.example.jessi.omnibus.util.AppController;
 import com.github.phajduk.rxvalidator.RxValidationResult;
 import com.github.phajduk.rxvalidator.RxValidator;
 import java.util.List;
@@ -24,14 +27,15 @@ public class PassengerAdapter extends RecyclerView.Adapter<PassengerAdapter.MyVi
     private static final String TAG = "PassengerAdapter";
 
     private Context context;
-    List<Passenger> passengerList;
-    char gender = 'M';
-    boolean isValid = false;
+    private List<Passenger> passengerList;
+    private char gender = 'M';
+    private boolean isValid = false;
+    private int seatConfirmed = 0;
 
     public PassengerAdapter(Context context, List<Passenger> passengerList) {
         this.context = context;
         this.passengerList = passengerList;
-        Log.d(TAG, "PassengerAdapter: Passenger List Size = "+ passengerList.size());
+
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -40,31 +44,24 @@ public class PassengerAdapter extends RecyclerView.Adapter<PassengerAdapter.MyVi
         EditText etLastName;
         EditText etAge;
         RadioButton rbMale;
-        RadioButton rbFemal;
+        RadioButton rbFemale;
         Context context;
         List<Passenger> passengerList;
+        Button add;
         boolean isValid = false;
-
-
 
         public MyViewHolder(@NonNull View itemView, Context context, List<Passenger> passengerList) {
             super(itemView);
 
-            for(int i = 0; i < passengerList.size();i ++)
-            {
-                passengerList.get(i).setLastName("");
-                passengerList.get(i).setFirstName("");
-                passengerList.get(i).setAge("");
-                passengerList.get(i).setGender("");
-            }
             this.context = context;
             this.passengerList = passengerList;
-            this.etFirstName = itemView.findViewById(R.id.et_passenger_fname);
-            this.etLastName = itemView.findViewById(R.id.et_passenger_lname);
+            this.etFirstName = itemView.findViewById(R.id.et_passenger_lname);
+            this.etLastName = itemView.findViewById(R.id.et_passenger_fname);
             this.etAge = itemView.findViewById(R.id.et_age);
             this.rbMale = itemView.findViewById(R.id.rb_male);
-            this.rbFemal = itemView.findViewById(R.id.rb_female);
+            this.rbFemale = itemView.findViewById(R.id.rb_female);
             this.tvPassengerCount = itemView.findViewById(R.id.tv_passenger_count);
+            this.add = itemView.findViewById(R.id.btn_add);
 
 
             initRxValidator ();
@@ -175,22 +172,48 @@ public class PassengerAdapter extends RecyclerView.Adapter<PassengerAdapter.MyVi
         myViewHolder.rbMale.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                myViewHolder.rbFemal.setActivated(false);
+                myViewHolder.rbFemale.setChecked(false);
                 passengerList.get(pos).setGender("M");
             }
         });
-        myViewHolder.rbFemal.setOnClickListener(new View.OnClickListener() {
+        myViewHolder.rbFemale.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                myViewHolder.rbMale.setActivated(false);
+                myViewHolder.rbMale.setChecked(false);
                 passengerList.get(pos).setGender("F");
             }
         });
 
-        passengerList.get(pos).setFirstName(myViewHolder.etFirstName.getText().toString());
-        passengerList.get(pos).setLastName(myViewHolder.etLastName.getText().toString());
-        passengerList.get(pos).setAge(myViewHolder.etAge.getText().toString());
+
         this.setValid(myViewHolder.isValid());
+
+        myViewHolder.add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(
+                    myViewHolder.etFirstName.getText().length() == 0 ||
+                    myViewHolder.etLastName.getText().length() == 0 ||
+                    myViewHolder.etAge.getText().length() == 0)
+                {
+                    Toast.makeText(context, "Missing Info", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    passengerList.get(pos).setFirstName(myViewHolder.etFirstName.getText().toString());
+                    passengerList.get(pos).setLastName(myViewHolder.etLastName.getText().toString());
+                    passengerList.get(pos).setAge(myViewHolder.etAge.getText().toString());
+                    myViewHolder.add.setBackgroundColor(Color.LTGRAY);
+                    myViewHolder.etFirstName.setEnabled(false);
+                    myViewHolder.etLastName.setEnabled(false);
+                    myViewHolder.etAge.setEnabled(false);
+                    myViewHolder.add.setEnabled(false);
+
+                    seatConfirmed++;
+                }
+            }
+        });
+
+
     }
 
     @Override
@@ -215,4 +238,11 @@ public class PassengerAdapter extends RecyclerView.Adapter<PassengerAdapter.MyVi
         isValid = valid;
     }
 
+    public int getSeatConfirmed() {
+        return seatConfirmed;
+    }
+
+    public void setSeatConfirmed(int seatConfirmed) {
+        this.seatConfirmed = seatConfirmed;
+    }
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,144 +9,147 @@
     tools:context=".ui.chekcout.CheckOutActivity"
     tools:layout_editor_absoluteY="81dp">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="15dp">
+
     <TextView
         android:id="@+id/tv_checkout_title"
         android:layout_width="114dp"
         android:layout_height="0dp"
         android:layout_marginStart="13dp"
-        android:layout_marginTop="33dp"
-        android:layout_marginBottom="18dp"
+        android:layout_marginTop="23dp"
+        android:layout_marginBottom="9dp"
         android:text="Check Out"
         android:textSize="15dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/cardView3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textStyle="bold" />
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardView3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginStart="9dp"
         android:layout_marginEnd="9dp"
-        android:layout_marginBottom="45dp"
-        app:layout_constraintBottom_toTopOf="@+id/cardView4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_checkout_title">
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="57dp">
-
-            <TextView
-                android:id="@+id/tv_route_name"
+        android:layout_marginBottom="8dp">
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Route: " />
+                android:orientation="vertical"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="57dp">
 
-            <TextView
-                android:id="@+id/tv_bus_id_invoice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Bus ID: " />
+                <TextView
+                    android:id="@+id/tv_route_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Route: " />
 
-            <TextView
-                android:id="@+id/tv_journey_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Journey Date: " />
+                <TextView
+                    android:id="@+id/tv_bus_id_invoice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Bus ID: " />
 
-            <TextView
-                android:id="@+id/tv_Boarding_time_invoice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Boarding Time: " />
+                <TextView
+                    android:id="@+id/tv_journey_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Journey Date: " />
 
-            <TextView
-                android:id="@+id/tv_dropping_time_invoice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Dropping Time: " />
+                <TextView
+                    android:id="@+id/tv_Boarding_time_invoice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Boarding Time: " />
 
-            <TextView
-                android:id="@+id/tv_duration_invoice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Duration: " />
+                <TextView
+                    android:id="@+id/tv_dropping_time_invoice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Dropping Time: " />
 
-            <TextView
-                android:id="@+id/tv_passenger_no"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Passenger No.:" />
+                <TextView
+                    android:id="@+id/tv_duration_invoice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Duration: " />
 
-            <TextView
-                android:id="@+id/tv_coupon_invoice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Coupon Discount: " />
+                <TextView
+                    android:id="@+id/tv_passenger_no"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Passenger No.:" />
 
-            <TextView
-                android:id="@+id/tv_service_tax"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Service Tax: " />
+                <TextView
+                    android:id="@+id/tv_coupon_invoice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Coupon Discount: " />
 
-            <TextView
-                android:id="@+id/tv_fare_invoice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Fare: " />
-            <TextView
-                android:id="@+id/tv_total"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:textColor="@color/colorPrimaryDark"
-                android:textStyle="bold"
-                android:textSize="20dp"/>
+                <TextView
+                    android:id="@+id/tv_service_tax"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Service Tax: " />
 
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
+                <TextView
+                    android:id="@+id/tv_fare_invoice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Fare: " />
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/cardView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="34dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView3">
+                <TextView
+                    android:id="@+id/tv_total"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/btn_purchase"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#0288D1"
-            android:padding="10dp"
-            android:text="Purchase"
-            android:textColor="#FFF"
-            tools:layout_editor_absoluteX="161dp"
-            tools:layout_editor_absoluteY="526dp" />
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cardView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="52dp"
+                    android:layout_gravity="center">
 
+                    <Button
+                        android:id="@+id/btn_purchase"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#0288D1"
+                        android:padding="10dp"
+                        android:text="Purchase"
+                        android:textColor="#FFF"
+                        tools:layout_editor_absoluteX="161dp"
+                        tools:layout_editor_absoluteY="526dp" />
+
+
+                </android.support.v7.widget.CardView>
+
+            </LinearLayout>
 
     </android.support.v7.widget.CardView>
 
 
-</android.support.constraint.ConstraintLayout>
+
+    </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

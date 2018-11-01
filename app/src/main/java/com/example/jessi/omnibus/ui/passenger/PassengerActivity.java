@@ -6,24 +6,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jessi.omnibus.R;
-import com.example.jessi.omnibus.data.models.CouponRequest;
 import com.example.jessi.omnibus.data.models.Passenger;
 import com.example.jessi.omnibus.data.models.SeatRequestResponse;
 import com.example.jessi.omnibus.data.models.SeatReservationRequest;
 import com.example.jessi.omnibus.ui.coupon.CouponActivity;
-import com.example.jessi.omnibus.ui.payment.PaymentActivity;
 import com.example.jessi.omnibus.ui.seat.SeatsActivity;
 import com.example.jessi.omnibus.util.AppController;
 import com.github.phajduk.rxvalidator.RxValidationResult;
 import com.github.phajduk.rxvalidator.RxValidator;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +34,7 @@ import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
-public class PassengerActivity extends AppCompatActivity implements PassengerContract.View{
+public class PassengerActivity extends AppCompatActivity implements PassengerContract.iView {
     private static final String TAG = "PassengerActivity";
     @BindView(R.id.tv_contact_info)
     TextView tvContactInfo;
@@ -89,22 +89,19 @@ public class PassengerActivity extends AppCompatActivity implements PassengerCon
                             "SeatName_"+i ));
             passengerList.add(temp);
 
-            tempMap.put(
-                    AppController
-                            .getInstance()
-                            .getSP(
-                                    PassengerActivity.this,
-                                    "TABLE",
-                                    "SeatName_"+i ), "1");
-
-            url += "&"+AppController
+            url += ChangeName(AppController
                     .getInstance()
                     .getSP(
                             PassengerActivity.this,
                             "TABLE",
-                            "SeatName_"+i ) + "=1";
+                            "SeatName_"+i ));
 
-
+//            url += "&"+AppController
+//                    .getInstance()
+//                    .getSP(
+//                            PassengerActivity.this,
+//                            "TABLE",
+//                            "SeatName_"+i ) + "=1";
         }
 
         seatReservationRequest.setSeatsMap(tempMap);
@@ -119,30 +116,14 @@ public class PassengerActivity extends AppCompatActivity implements PassengerCon
     }
 
     @OnClick(R.id.btn_add_passengers)
-    public void onViewClicked() {
-        if (!confirmed)
+    public void onViewClicked(View view) {
+        passengerList = passengerAdapter.getPassengerList();
+
+        if (seatCount != passengerAdapter.getSeatConfirmed())
         {
-            for(int i = 0; i < adapter.getItemCount(); i++)
-            {
-                adapter.notifyItemChanged(i);
-            }
-            confirmed = true;
-            btnAddPassengers.setText("Confirmed Seats");
+            Toast.makeText(this, "Info Missing", Toast.LENGTH_SHORT).show();
         }else
-        if (!set)
         {
-            for(int i = 0; i < adapter.getItemCount(); i++)
-            {
-                adapter.notifyItemChanged(i);
-            }
-            set = true;
-            btnAddPassengers.setText("Continue");
-        }
-        else
-        {
-            Log.d(TAG, "onViewClicked: "+ adapter.getItemId(0));
-
-
             if (isValid.isValid() || passengerAdapter.isValid())
             {
                 passengerList = passengerAdapter.getPassengerList();
@@ -175,30 +156,35 @@ public class PassengerActivity extends AppCompatActivity implements PassengerCon
                                     "TABLE",
                                     "Gender_" + i,
                                     passengerList.get(i).getGender() );
+
+
+                    AppController
+                            .getInstance()
+                            .addSP(this,
+                                    "TABLE",
+                                    "SeatNo_" + i,
+                                    passengerList.get(i).getGender() );
                 }
 
-                startActivity(couponActivity);
+                presenter.onButtonClicked(view);
             }
-            else {
-                Toast.makeText(this, "Missing Information", Toast.LENGTH_SHORT).show();
-            }
-            confirmed= false;
-        }
 
+        }
 
     }
     @Override
     public void setSeatReservation(SeatRequestResponse seatRequestResponse) {
         Log.d(TAG, "setSeatReservation: "+ seatRequestResponse.getMsg().get(0));
-        if (!seatRequestResponse.getMsg().get(0).contains("reserved"))
+        if (seatRequestResponse.getMsg().get(0).contains("reserved"))
         {
-            Toast.makeText(this, "Seat(s) Cannot be Reserved", Toast.LENGTH_SHORT).show();
-            Intent seatActivity = new Intent(PassengerActivity.this, SeatsActivity.class);
-            startActivity(seatActivity);
+            Toast.makeText(this, "Reserved!", Toast.LENGTH_SHORT).show();
+            startActivity(couponActivity);
         }
-        else if(seatRequestResponse.getMsg().contains("reserved"))
+        else if(seatRequestResponse.getMsg().get(0).contains("already reserved"))
         {
+            Intent seatActivity = new Intent(PassengerActivity.this, SeatsActivity.class);
             Toast.makeText(this, "Seats Reserved", Toast.LENGTH_SHORT).show();
+            startActivity(seatActivity);
         }
     }
 
@@ -266,5 +252,77 @@ public class PassengerActivity extends AppCompatActivity implements PassengerCon
     @Override
     public SeatReservationRequest getSeatReservationRequest() {
         return seatReservationRequest;
+    }
+
+
+    public String ChangeName(String name)
+    {
+        StringBuilder temp = new StringBuilder();
+        Log.d(TAG, "ChangeName: name ="+ name);
+        int seatNumber;
+        for(int i = name.length(); i > 0; i--)
+        {
+            if (name.charAt(i -1) == 's'){
+                break;
+            }
+            else {
+
+                temp.insert(0, name.charAt(i-1)) ;
+            }
+        }
+        seatNumber = Integer.valueOf(temp.toString());
+        Log.d(TAG, "ChangeName: seatNumber = "+ seatNumber);
+        List<String> seats = Arrays.asList(
+                "seatone",
+                "seattwo",
+                "seatthree",
+                "seatfour",
+                "seatfive",
+                "seatsix",
+                "seatseven",
+                "seateight",
+                "seatnine",
+                "seatten",
+                "seateleven",
+                "seattwelve",
+                "seatthirteen",
+                "seatfourteen",
+                "seatfifteen",
+                "seatsixteen",
+                "seatseventeen",
+                "seateighteen",
+                "seatnineteen",
+                "seattwenty",
+                "seattwentyone",
+                "seattwentytwo",
+                "seattwentythree",
+                "seattwentyfour",
+                "seattwentyfive",
+                "seattwentysix",
+                "seattwentyseven",
+                "seattwentyeight",
+                "seattwentynine",
+                "seatthirty",
+                "seatthirtyone",
+                "seatthirtytwo ",
+                "seatthirtythree",
+                "seatthirtyfour",
+                "seatthirtyfive",
+                "seatthirtysix",
+                "seatthirtyseven",
+                "seatthirtyeight",
+                "seatthirtynine",
+                "seatforty",
+                "seatfortyone",
+                "seatfortytwo",
+                "seatfortytwo",
+                "seatfortythree",
+                "seatfortyfour",
+                "seatfourtyfive",
+                "seatfortysix",
+                "seatfourtyseven");
+
+
+        return "&"+seats.get(seatNumber-1)+"=1";
     }
 }

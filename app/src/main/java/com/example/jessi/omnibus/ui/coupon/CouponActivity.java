@@ -51,15 +51,26 @@ public class CouponActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         busID = AppController.getInstance().getSP(this, "TABLE", "BusID");
-
         dTotal = Double.valueOf(AppController.getInstance().getSP(this, "TABLE", "Fare"))
                 *  Double.valueOf(AppController.getInstance().getSP(this, "TABLE", "SeatCount")) ;
+        int seatCount = Integer.valueOf(AppController.getInstance().getSP(this, "TABLE", "SeatCount"));
+        String passengersInfo = "\n";
+        for (int i =0; i < seatCount; i++)
+        {
+            String fName = AppController.getInstance().getSP(this, "TABLE", "FirstName_"+i);
+            String lName = AppController.getInstance().getSP(this, "TABLE", "LastName_"+i);
+            String age = AppController.getInstance().getSP(this, "TABLE", "Age_"+i);
+            passengersInfo += "\nPassenger "
+                    + (i+1)
+                    + ": "
+                    + fName
+                    + " "
+                    + lName;
 
-        tvCouponMessage.setText(dTotal+ "" );
-
+        }
+        tvCouponMessage.setText("Fare: $"+(dTotal*seatCount)+ "\n"+ passengersInfo);
 
         RxValidator.createFor(this.etCouponNo)
-                .nonEmpty()
                 .digitOnly()
                 .onFocusChanged()
                 .toObservable()
@@ -73,7 +84,6 @@ public class CouponActivity extends AppCompatActivity {
                             proper = false;
                         }
 
-
                     }
                 }, new Action1<Throwable>() {
                     @Override
@@ -81,24 +91,18 @@ public class CouponActivity extends AppCompatActivity {
                         Log.e(TAG, "Validation error", throwable);
                     }
                 });
-
-        couponNo = this.etCouponNo.getText().toString();
-        AppController.getInstance().addSP(this, "TABLE", "CouponNo", couponNo);
-
     }
 
     @OnClick(R.id.btn_coupon)
     public void onViewClicked() {
         Intent paymentIntent = new Intent(CouponActivity.this, PaymentActivity.class);
-        if (etCouponNo.getText().length() == 0)
-        {
-            proper = true;
-            AppController.getInstance().addSP(this, "TABLE", "Discount", "0");
-        }
 
-        if(proper)
+        if(proper || etCouponNo.getText().length() ==0)
         {
+            couponNo = this.etCouponNo.getText().toString();
+            AppController.getInstance().addSP(this, "TABLE", "CouponNo", couponNo);
             startActivity(paymentIntent);
+
         }
         else
         {

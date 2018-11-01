@@ -30,20 +30,19 @@ public class LogInPresenter implements  LogInContract.Presenter, IDataManger.Log
     public void onButtonClicked(View view) {
         switch (view.getId()){
             case R.id.btn_login_log:
-                Toast.makeText(view.getContext(), "LoginModelOld Clicked", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(view.getContext(), "LoginModelOld Clicked", Toast.LENGTH_SHORT).show();
                 dataManger.networkRetrofitCallLogin(this, this.view.getLoginRequest());
-                Intent intentSearch = new Intent(context, SearchActivity.class);
-                context.startActivity(intentSearch);
+
                 break;
             case R.id.btn_register_log:
                 Intent intentReg = new Intent(context, RegistrationActivity.class);
                 context.startActivity(intentReg);
                 break;
             case R.id.tv_forgot_pw:
-                Toast.makeText(view.getContext(), "Forgot Password Clicked", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(view.getContext(), "Forgot Password Clicked", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn_reset:
-                Toast.makeText(view.getContext(), "Rest", Toast.LENGTH_SHORT).show();
+                Toast.makeText(view.getContext(), "Reset", Toast.LENGTH_SHORT).show();
                 dataManger.networkRetrofitCallForgotPW(this, this.view.getPasswordRequest());
                 break;
             
@@ -53,6 +52,7 @@ public class LogInPresenter implements  LogInContract.Presenter, IDataManger.Log
 
     @Override
     public void passLogin(LogIn logIn) {
+
         view.setLoginModel(logIn);
     }
 
